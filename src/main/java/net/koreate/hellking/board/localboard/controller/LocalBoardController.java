@@ -1,6 +1,4 @@
-package net.koreate.hellking.board.secretboard.controller;
-
-import java.util.List;
+package net.koreate.hellking.board.localboard.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,23 +11,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
-import net.koreate.hellking.board.secretboard.service.SecretBoardService;
-import net.koreate.hellking.board.secretboard.vo.SecretBoardVO;
-import net.koreate.hellking.common.util.Criteria;
-import net.koreate.hellking.common.util.PageMaker;
+import net.koreate.hellking.board.localboard.service.LocalBoardService;
+import net.koreate.hellking.board.localboard.vo.LocalBoardVO;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
-public class SecretBoardController {
+public class LocalBoardController {
 
-	private final SecretBoardService service;
+	private final LocalBoardService service;
 
 	/**
 	 * 게시글 작성 페이지 요청 
 	 * Get : board/register
 	 */
-	@GetMapping("secretregister")
+	@GetMapping("localregister")
 	public void register() throws Exception{
 		System.out.println("게시글 작성 페이지 요청");
 	}	
@@ -38,29 +34,29 @@ public class SecretBoardController {
 	 * 게시글 등록 요청 처리
 	 * Post : board/register 
 	 */
-	@PostMapping("secretregister")
-	public String registerPost(SecretBoardVO board, HttpSession session) throws Exception {
+	@PostMapping("localregister")
+	public String registerPost(LocalBoardVO board, HttpSession session) throws Exception {
 		System.out.println("param data : " + board);
 		String result = service.regist(board);
 		session.setAttribute("msg", result);
-		return "redirect:/board/secretboard";
+		return "redirect:/board/localboard";
 	}
 	
 	/**
 	 * 게시글 상세보기 요청 시 조회 수 증가
 	 * GET : board/readPage
 	 */
-	@GetMapping("secretreadPage")
+	@GetMapping("localreadPage")
 	public String readPage(int bno, Model model) throws Exception{
 		
 		// 조회수 증가
 		service.updateCnt(bno);
 		
 		// 상세보기 게시글 정보
-		SecretBoardVO board = service.read(bno);
+		LocalBoardVO board = service.read(bno);
 		model.addAttribute("list", board);
 		
-		return "board/secretread";
+		return "board/localread";
 	}
 	
 	
@@ -68,9 +64,9 @@ public class SecretBoardController {
 	 * 게시글 수정 페이지 요청
 	 * GET : board/modify
 	 */
-	@GetMapping("board/modify")
+	@GetMapping("board/localmodify")
 	public void modify(int bno, Model model) throws Exception{
-		SecretBoardVO board = service.read(bno);
+		LocalBoardVO board = service.read(bno);
 		model.addAttribute(board); // boardVO
 	}
 	
@@ -79,11 +75,11 @@ public class SecretBoardController {
 	 * 게시글 수정 요청 처리 -> 수정된 게시글 상세보기 페이지 이동
 	 * Post : board/modify
 	 */
-	@PostMapping("board/modify")
-	public String modify(SecretBoardVO board, HttpSession session)throws Exception{
+	@PostMapping("board/localmodify")
+	public String modify(LocalBoardVO board, HttpSession session)throws Exception{
 		String result = service.modify(board);
 		session.setAttribute("result", result);
-		return "redirect:/board/secretboard/readPage?bno=" + board.getBno();
+		return "redirect:/board/localboard/readPage?bno=" + board.getBno();
 	}
 	
 	
@@ -91,15 +87,15 @@ public class SecretBoardController {
 	 * 게시글 삭제 요청 처리 -> 게시글 삭제 후 목록 페이지 이동
 	 * Get : board/remove 
 	 */
-	@GetMapping("board/secretremove")
+	@GetMapping("board/localremove")
 	public String remove(int bno, HttpSession session) throws Exception{
 		String result = service.remove(bno);
 		session.setAttribute("result", result);
-		return "redirect:/board/secretboard";
+		return "redirect:/board/localboard";
 	}
 	
 	
-	@PostMapping("board/secretagree")
+	@PostMapping("board/localagree")
 	@ResponseBody
 	public int plusAgree(@RequestParam("bno") int bno) throws Exception{
 		service.plusAgree(bno); // 추천수 증가

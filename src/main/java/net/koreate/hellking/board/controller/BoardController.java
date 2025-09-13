@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import net.koreate.hellking.board.localboard.service.LocalBoardService;
+import net.koreate.hellking.board.localboard.vo.LocalBoardVO;
 import net.koreate.hellking.board.secretboard.service.SecretBoardService;
 import net.koreate.hellking.board.secretboard.vo.SecretBoardVO;
 import net.koreate.hellking.board.service.BoardService;
@@ -25,6 +27,7 @@ public class BoardController {
 	
 	private final BoardService service;
 	private final SecretBoardService sService;
+	private final LocalBoardService lService;
 
 	/**
 	 * 게시글 작성 페이지 요청 
@@ -151,8 +154,14 @@ public class BoardController {
 	}
 	
 	@GetMapping("board/localboard")
-	public void localboard() throws Exception{
+	public String localboard(LocalBoardVO board, Criteria cri, Model model) throws Exception{
 		
+		List<LocalBoardVO> allList = lService.listCriteria(cri);
+		model.addAttribute("allList", allList);
+		PageMaker pm = service.getPageMaker(cri);
+		model.addAttribute("pm", pm);
+		
+		return "board/localboard";
 	}
 	
 	@PostMapping("agree")
