@@ -1,0 +1,17 @@
+table{
+	border : 1px solid black;
+	margin : 0 auto;
+	margin-top : 200px;
+	margin-left : 300px;
+	width : 60%;
+	height : 100%;
+	border-spacing : 0px;
+}
+.boardtitle{
+	text-align : left;
+}
+
+.category{
+	
+}
+
