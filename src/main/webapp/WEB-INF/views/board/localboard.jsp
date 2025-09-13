@@ -19,6 +19,27 @@
 		<tr>
 			<td>모든 지역 게시글 테이블</td>
 		</tr>
+		</tr>
+		<tr>
+			<select id="category" onchange="findCategory()">
+				  <option value="1">서울</option>
+				  <option value="2">부산</option>
+				  <option value="3">대구</option>
+				  <option value="4">인천</option>
+				  <option value="5">광주</option>
+				  <option value="6">대전</option>
+				  <option value="7">울산</option>
+				  <option value="8">수원</option>
+				  <option value="9">성남</option>
+				  <option value="10">청주</option>
+				  <option value="11">천안</option>
+				  <option value="12">전주</option>
+				  <option value="13">군산</option>
+				  <option value="14">순천</option>
+				  <option value="15">목포</option>
+				  <!-- 나머지 지역 -->
+				</select>
+		</tr>
 		<tr>
 			<th>글번호</th>
 			<th>제목</th>
@@ -27,16 +48,10 @@
 			<th>조회수</th>
 			<th>추천수</th>
 		</tr>
-		<c:forEach items="${allList}" var="list">
-			<tr>
-				<td>${list.bno}</td>
-				<td><a href="localreadPage?bno=${list.bno}">${list.title}</a></td>
-				<td>${list.nickname}</td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}" /></td>
-				<td>${list.viewcnt}</td>
-				<td>${list.agree}</td>
-			</tr>
-		</c:forEach>
+		<%-- <c:forEach items="${allList}" var="list"> --%>
+			<tbody id="list">
+			</tbody>
+		<%-- </c:forEach> --%>
 	</table>
 	
 	<table></table>
@@ -52,7 +67,43 @@
 	
 	
 	</div>
-		
+<script>
+// 내가 지정한 findCategory 함수를 불러오는 로직
+function findCategory() {
+	const contextPath = "${pageContext.request.contextPath}";
+	// 내가 카테고리를 선택하면 그 카테고리에 해당하는 번호값을 가져옴
+  const categoryId = document.getElementById('category').value;
+	// 3항연산자 사용 categoryId가 있으면 board/board...로 경로를 지정하고, 없으면 board/list로 경로를호출해서 모든게시글을 다보여줌
+  const url = categoryId  ? `${contextPath}/board/localboard/${categoryId}` : `${contextPath}/board/list`;
+
+	
+  // 위에서 선언된 url로 서버에 GET 요청을보냄 서버는 json 형태로 응답해야함
+  fetch('http://localhost:8080/board/board/localboard/1')
+  	// 서버응답을 json으로 파싱 res는 HTTP 응답객체이고 .json()은 본문을 js객체로 변환
+    .then(res => res.json())
+    // json으로 파싱된 게시글 목록 배열
+    .then(data => {  
+	// 게시글 배열을 순회하며 HTML tr을 자동생성
+      const rows = data.map(list => {
+    	  console.log('각 게시글:', list); // 각 객체에 값이 있는지 확인
+    	  const date = list.regdate ? new Date(list.regdate).toLocaleDateString() : '';
+      return ` <tr>
+          <td>${list.bno}</td>
+          <td>${list.title}</td>
+          <td>${list.nickname}</td>
+          <td>${formattedDate}</td>
+          <td>${list.viewcnt}</td>
+          <td>${list.agree}</td>
+        </tr> `
+      }).join('');
+      document.getElementById('list').innerHTML = rows;
+    })
+    .catch(err => {
+      console.error('게시글 불러오기 실패:', err);
+      document.getElementById('list').innerHTML = `<tr><td colspan="6">게시글을 불러올 수 없습니다.</td></tr>`;
+    });
+}
+</script>
 
 </body>
 </html>

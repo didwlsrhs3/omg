@@ -1,10 +1,13 @@
 package net.koreate.hellking.board.localboard.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +61,13 @@ public class LocalBoardController {
 		
 		return "board/localread";
 	}
-	
+
+	@GetMapping("board/localboard/{categoryId}")
+	@ResponseBody
+	public List<LocalBoardVO> findCategory(@PathVariable int categoryId) throws Exception {
+
+	    return service.findCategory(categoryId);
+	}
 	
 	/**
 	 * 게시글 수정 페이지 요청

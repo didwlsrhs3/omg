@@ -7,23 +7,29 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 	<!-- parameterType="net.koreate.hellking.board.dao.BoardDAO" -->
 	<!-- int create(BoardVO board) -->
-	<insert id="create" parameterType="LocalboardVO">
+	<insert id="create" parameterType="LocalBoardVO">
 		INSERT INTO local_board(title,content,nickname) 
 		VALUES(#{title},#{content},#{nickname})
 	</insert>
 	
 	<select id="listCriteria" 
 			parameterType="net.koreate.hellking.common.util.Criteria" 
-			resultType="LocalboardVO">
+			resultType="LocalBoardVO">
 		SELECT * FROM local_board ORDER BY bno DESC 
 		OFFSET #{startRow} ROWS FETCH NEXT #{perPageNum} ROWS ONLY
 	</select>
+	
+	<select id="findCategory" resultType="LocalBoardVO">
+		SELECT * FROM local_board
+		WHERE category_id = #{categoryId}
+		ORDER BY regdate DESC
+	</select> 
 	
 	<select id="totalCount" resultType="int">
 		SELECT count(*) FROM local_board
 	</select>
 	
-	<select id="getHotBoard" resultType="LocalboardVO" parameterType="LocalBoardVO">
+	<select id="getHotBoard" resultType="LocalBoardVO" parameterType="LocalBoardVO">
 		SELECT * FROM local_board
         WHERE agree >= #{HotAgree}
 	</select>
@@ -35,11 +41,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 게시글 번호로 검색한 1개의 게시글 정보  -->
-	<select id="read" parameterType="int" resultType="LocalboardVO">
+	<select id="read" parameterType="int" resultType="LocalBoardVO">
 		SELECT * FROM local_board WHERE bno = #{bno}
 	</select>
 	
-	<update id="update" parameterType="LocalboardVO">
+	<update id="update" parameterType="LocalBoardVO">
 		UPDATE local_board SET title = #{title}, content = #{content}, 
 		nickname = #{nickname} WHERE bno = #{bno}
 	</update>

@@ -20,6 +20,12 @@ public interface LocalBoardDAO {
 	LocalBoardVO read(int bno) throws Exception;
 	
 	/**
+	 * 지역별 게시글로 나눠서 게시글을 조회
+	 */
+    List<LocalBoardVO> findCategory(int categoryId) throws Exception;
+	
+	
+	/**
 	 * @param board - 수정할 게시글 정보
 	 * @return - 수정된 행의 개수
 	 */
@@ -59,6 +65,10 @@ public interface LocalBoardDAO {
 	 * 추천 수 증가 실시간 조회 ajax이용
 	 */
 	int AgreeCount(int bno) throws Exception; 
+	
+
+	
+
 	
 	
 	

@@ -30,6 +30,11 @@ public interface LocalBoardService {
 	LocalBoardVO read(int bno) throws Exception;
 	
 	/**
+	 * 게시글 카테고리에 맞춰서 그에 맞는 글만 조회
+	 */
+	List<LocalBoardVO> findCategory(int category_id) throws Exception;
+	
+	/**
 	 * 게시글 수정 요청처리
 	 * @param board - 게시글 수정 데이터(bno,title,content,writer)
 	 * @return - 게시글 수정 완료 여부 메세지 

@@ -33,6 +33,11 @@ public class LocalBoardServiceImpl implements LocalBoardService{
 	public LocalBoardVO read(int bno) throws Exception {
 		return dao.read(bno);
 	}
+	
+	@Override
+	public List<LocalBoardVO> findCategory(int categoryId) throws Exception {
+		return dao.findCategory(categoryId);
+	}
 
 	@Override
 	public String modify(LocalBoardVO board) throws Exception {

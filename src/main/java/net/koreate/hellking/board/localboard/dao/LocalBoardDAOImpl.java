@@ -27,6 +27,11 @@ public class LocalBoardDAOImpl implements LocalBoardDAO{
 	public LocalBoardVO read(int bno) throws Exception {
 		return session.selectOne("localMapper.read", bno);
 	}
+	
+	@Override
+	public List<LocalBoardVO> findCategory(int categoryId) throws Exception {
+		return session.selectList("localMapper.findCategory", categoryId);
+	}
 
 	@Override
 	public int update(LocalBoardVO board) throws Exception {
@@ -40,7 +45,7 @@ public class LocalBoardDAOImpl implements LocalBoardDAO{
 
 	@Override
 	public void updateCnt(int bno) throws Exception {
-		session.update("secretMapper.updateCnt", bno);
+		session.update("localMapper.updateCnt", bno);
 	}
 
 	@Override
@@ -63,6 +68,7 @@ public class LocalBoardDAOImpl implements LocalBoardDAO{
 	public int AgreeCount(int bno) throws Exception {
 		return session.selectOne("localMapper.viewAgree", bno);
 	}
+
 
 	
 
