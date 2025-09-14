@@ -62,12 +62,14 @@ public class LocalBoardController {
 		return "board/localread";
 	}
 
-	@GetMapping("board/localboard/{categoryId}")
-	@ResponseBody
-	public List<LocalBoardVO> findCategory(@PathVariable int categoryId) throws Exception {
-
-	    return service.findCategory(categoryId);
-	}
+	/*
+	 * @GetMapping("board/localboard/{categoryId}")
+	 * 
+	 * @ResponseBody public List<LocalBoardVO> findCategory(@PathVariable int
+	 * categoryId) throws Exception {
+	 * 
+	 * return service.findCategory(categoryId); }
+	 */
 	
 	/**
 	 * 게시글 수정 페이지 요청

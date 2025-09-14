@@ -18,9 +18,7 @@
 		</tr>
 		<tr>
 			<td>모든 지역 게시글 테이블</td>
-		</tr>
-		</tr>
-		<tr>
+			<td>
 			<select id="category" onchange="findCategory()">
 				  <option value="1">서울</option>
 				  <option value="2">부산</option>
@@ -39,6 +37,7 @@
 				  <option value="15">목포</option>
 				  <!-- 나머지 지역 -->
 				</select>
+			</td>
 		</tr>
 		<tr>
 			<th>글번호</th>
@@ -55,7 +54,7 @@
 	</table>
 	
 	<table></table>
-	<div class="category">게시판
+	<div class="menucategory">게시판
 		<aside class="category-menu">
 			<ul>
 				<li><span>익명게시판</span></li>
@@ -71,14 +70,28 @@
 // 내가 지정한 findCategory 함수를 불러오는 로직
 function findCategory() {
 	const contextPath = "${pageContext.request.contextPath}";
+	console.log("contextPath:", contextPath);
 	// 내가 카테고리를 선택하면 그 카테고리에 해당하는 번호값을 가져옴
   const categoryId = document.getElementById('category').value;
 	// 3항연산자 사용 categoryId가 있으면 board/board...로 경로를 지정하고, 없으면 board/list로 경로를호출해서 모든게시글을 다보여줌
-  const url = categoryId  ? `${contextPath}/board/localboard/${categoryId}` : `${contextPath}/board/list`;
+  // const url = categoryId  ? `${contextPath}/board/localboard/${categoryId}` : `${contextPath}/board/list`;
+  // const url = categoryId  ? `${contextPath}/board/localboard/${categoryId}` : `${contextPath}/board/localboard`;
+  console.log('categoryId:', categoryId); // 각 객체에 값이 있는지 확인
+  console.log("타입 : ", typeof categoryId);
+  const url = `${contextPath}/board/localboard/${categoryId}`;
+  console.log("최종 요청 경로:", url);
+  if (categoryId && categoryId.trim() !== "") {
+	  const url = `${contextPath}/board/localboard/${categoryId}`;
+	  console.log("정상 요청 경로:", url);
+	} else {
+	  const url = `${contextPath}/board/localboard`;
+	  console.log("전체 요청 경로:", url);
+	}
+
 
 	
   // 위에서 선언된 url로 서버에 GET 요청을보냄 서버는 json 형태로 응답해야함
-  fetch('http://localhost:8080/board/board/localboard/1')
+  fetch(url)
   	// 서버응답을 json으로 파싱 res는 HTTP 응답객체이고 .json()은 본문을 js객체로 변환
     .then(res => res.json())
     // json으로 파싱된 게시글 목록 배열
@@ -91,7 +104,7 @@ function findCategory() {
           <td>${list.bno}</td>
           <td>${list.title}</td>
           <td>${list.nickname}</td>
-          <td>${formattedDate}</td>
+          <td>${date}</td>
           <td>${list.viewcnt}</td>
           <td>${list.agree}</td>
         </tr> `
