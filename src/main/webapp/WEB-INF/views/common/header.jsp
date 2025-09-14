@@ -139,7 +139,7 @@
         <li><a href="${pageContext.request.contextPath}/reviews">고객리뷰</a></li>
         <!-- 5. 고객센터 -->
         <li>
-          <a href="${pageContext.request.contextPath}/support" aria-haspopup="true" aria-expanded="false">고객센터</a>
+          <a href="${pageContext.request.contextPath}/supportUser/supportmain" aria-haspopup="true" aria-expanded="false">고객센터</a>
           <ul class="hk-sub" aria-label="고객센터 소메뉴">
             <li><a href="${pageContext.request.contextPath}/support/faq">FAQ</a></li>
             <li><a href="${pageContext.request.contextPath}/support/search">문의사항 검색</a></li>
