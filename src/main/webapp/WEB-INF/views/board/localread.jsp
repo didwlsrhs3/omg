@@ -58,7 +58,7 @@
 <!-- -------------------------------------------------------------------------------------- -->
 <script>
 	function update(bno){
-		fetch("/board/agree",{
+		fetch("/localboard/agree",{
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/x-www-form-urlencoded",

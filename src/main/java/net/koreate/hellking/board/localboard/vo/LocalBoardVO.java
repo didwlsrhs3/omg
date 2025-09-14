@@ -15,6 +15,7 @@ public class LocalBoardVO {
 	    private int viewcnt;
 	    private int agree;
 	    private int disagree;
-	    private int categoryId;
+	    private int category_id;
+
 
 	}

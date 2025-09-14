@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import net.koreate.hellking.board.localboard.service.LocalBoardService;
 import net.koreate.hellking.board.localboard.vo.LocalBoardVO;
+import net.koreate.hellking.board.service.BoardService;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ import net.koreate.hellking.board.localboard.vo.LocalBoardVO;
 public class LocalBoardController {
 
 	private final LocalBoardService service;
+	private final BoardService MService;
 
 	/**
 	 * 게시글 작성 페이지 요청 
@@ -62,14 +65,14 @@ public class LocalBoardController {
 		return "board/localread";
 	}
 
-	/*
-	 * @GetMapping("board/localboard/{categoryId}")
-	 * 
-	 * @ResponseBody public List<LocalBoardVO> findCategory(@PathVariable int
-	 * categoryId) throws Exception {
-	 * 
-	 * return service.findCategory(categoryId); }
-	 */
+	 @GetMapping("localboard/{category_id}")
+	 @ResponseBody 
+	 public List<LocalBoardVO> findCategory(@PathVariable int category_id) throws Exception {
+	 
+		 return service.findCategory(category_id);
+	 }
+
+	
 	
 	/**
 	 * 게시글 수정 페이지 요청
@@ -109,8 +112,8 @@ public class LocalBoardController {
 	@PostMapping("board/localagree")
 	@ResponseBody
 	public int plusAgree(@RequestParam("bno") int bno) throws Exception{
-		service.plusAgree(bno); // 추천수 증가
-		int result = service.AgreeCount(bno);
+		MService.plusAgree(bno); // 추천수 증가
+		int result = MService.AgreeCount(bno);
 		System.out.println(result);
 		return result;
 	}

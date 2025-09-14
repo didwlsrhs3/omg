@@ -154,22 +154,12 @@ public class BoardController {
 		return "board/secretboard";
 	}
 	
-	@GetMapping("board/localboard")
-	public String localboard(LocalBoardVO board, Criteria cri, Model model) throws Exception{
-		
-		List<LocalBoardVO> allList = lService.listCriteria(cri);
-		model.addAttribute("allList", allList);
-		PageMaker pm = service.getPageMaker(cri);
-		model.addAttribute("pm", pm);
-		
-		return "board/localboard";
-	}
-	
-	@GetMapping("board/localboard/{categoryId}")
-	@ResponseBody
-	public List<LocalBoardVO> findCategory(@PathVariable int categoryId) throws Exception {
-
-	    return lService.findCategory(categoryId);
+	@GetMapping("board/localboard") public String localboard(LocalBoardVO board, Criteria cri, Model model) throws Exception{
+		 List<LocalBoardVO> allList = lService.listCriteria(cri);
+		 model.addAttribute("allList", allList); PageMaker pm =
+		 service.getPageMaker(cri); model.addAttribute("pm", pm);
+		  
+		 return "board/localboard";
 	}
 	
 	@PostMapping("agree")

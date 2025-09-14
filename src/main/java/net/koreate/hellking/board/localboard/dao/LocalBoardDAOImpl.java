@@ -29,8 +29,8 @@ public class LocalBoardDAOImpl implements LocalBoardDAO{
 	}
 	
 	@Override
-	public List<LocalBoardVO> findCategory(int categoryId) throws Exception {
-		return session.selectList("localMapper.findCategory", categoryId);
+	public List<LocalBoardVO> findCategory(int category_id) throws Exception {
+		return session.selectList("localMapper.findCategory", category_id);
 	}
 
 	@Override

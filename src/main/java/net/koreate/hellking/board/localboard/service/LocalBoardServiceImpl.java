@@ -35,8 +35,8 @@ public class LocalBoardServiceImpl implements LocalBoardService{
 	}
 	
 	@Override
-	public List<LocalBoardVO> findCategory(int categoryId) throws Exception {
-		return dao.findCategory(categoryId);
+	public List<LocalBoardVO> findCategory(int category_id) throws Exception {
+		return dao.findCategory(category_id);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public interface LocalBoardDAO {
 	/**
 	 * 지역별 게시글로 나눠서 게시글을 조회
 	 */
-    List<LocalBoardVO> findCategory(int categoryId) throws Exception;
+    List<LocalBoardVO> findCategory(int category_id) throws Exception;
 	
 	
 	/**
